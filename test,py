@@ -1,0 +1,75 @@
+import tkinter as tk
+import mysql.connector
+
+mydb = mysql.connector.connect(
+  host="localhost",
+  user="root",
+  password="root",
+  database="asistencia"
+)
+
+
+def abrir_tercera_ventana():
+    tercera_ventana = tk.Toplevel()
+    tercera_ventana.title("Tabla Alumnos")
+    tercera_ventana.geometry("400x300")
+    
+    table = str(input("Ingrese el nombre de la tabla que quiere ver: "))
+    varstr = f"SELECT * FROM alumnos"
+  
+    mycursor = mydb.cursor()
+
+    mycursor.execute(varstr)
+
+    myresult = mycursor.fetchall()
+    
+    for x in myresult:
+        print(x)
+
+
+def abrir_cuarta_ventana():
+    cuarta_ventana = tk.Toplevel()
+    cuarta_ventana.title("Cuarta ventana")
+    cuarta_ventana.geometry("400x300")
+    
+    etiqueta_cuarta = tk.Label(cuarta_ventana, text="¡Esta es la cuarta ventana!")
+    etiqueta_cuarta.pack(pady=10)
+
+    
+    boton_cerrar_cuarta = tk.Button(cuarta_ventana, text="Cerrar", command=cuarta_ventana.destroy)
+    boton_cerrar_cuarta.pack(pady=10)
+
+
+def abrir_segunda_ventana():
+    segunda_ventana = tk.Toplevel()
+    segunda_ventana.title("Segunda ventana")
+    segunda_ventana.geometry("300x200")
+    
+    etiqueta_segunda = tk.Label(segunda_ventana, text="¡Esta es la segunda ventana!")
+    etiqueta_segunda.pack(pady=20)
+    
+    boton_abrir_tercera = tk.Button(segunda_ventana, text="Abrir tercera ventana", command=abrir_tercera_ventana)
+    boton_abrir_tercera.pack(pady=10)
+    
+    boton_abrir_cuarta = tk.Button(segunda_ventana, text="Abrir cuarta ventana", command=abrir_cuarta_ventana)
+    boton_abrir_cuarta.pack(pady=10)
+    
+    boton_cerrar_segunda = tk.Button(segunda_ventana, text="Cerrar", command=segunda_ventana.destroy)
+    boton_cerrar_segunda.pack(pady=10)
+
+
+ventana = tk.Tk()
+ventana.title("Ventana principal")
+ventana.geometry("400x300")
+
+
+etiqueta = tk.Label(ventana, text="¡Hola, mundo!")
+etiqueta.pack(pady=20)
+
+boton_abrir = tk.Button(ventana, text="Abrir segunda ventana", command=abrir_segunda_ventana)
+boton_abrir.pack(pady=10)
+
+ventana.mainloop()
+
+
+
